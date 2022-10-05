@@ -9,6 +9,10 @@ export function getUser() {
     return client.auth.user();
 }
 
+export function getPetId() {
+    return client.pet.user();
+}
+
 export async function signUpUser(email, password) {
     return await client.auth.signUp({
         email,
