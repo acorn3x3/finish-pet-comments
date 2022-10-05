@@ -9,8 +9,6 @@ export function getUser() {
     return client.auth.user();
 }
 
-
-
 export async function signUpUser(email, password) {
     return await client.auth.signUp({
         email,
@@ -29,8 +27,6 @@ export async function signOutUser() {
     return await client.auth.signOut();
 }
 
-
-}
 /* Data functions */
 
 export async function createPet(pet) {
