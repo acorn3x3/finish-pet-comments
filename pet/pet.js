@@ -37,7 +37,7 @@ window.addEventListener('load', async () => {
 
     } else {
         displayPet();
-        displayComments();
+       
     }
 
     // > Part B:
