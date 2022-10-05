@@ -74,12 +74,17 @@ function displayError() {
 }
 
 function displayPet() {
-    if (error) {
-        // eslint-disable-next-line no-console
-        console.log(error);
-        errorDisplay.textcContent = error.message;
-    } else {
-        displayPet.
+    petName.textContent = pet.name;
+    petBio.textContent = pet.bio;
+    petImage.src = pet.image_url;
+    
+
+    // if (error) {
+    //     // eslint-disable-next-line no-console
+    //     console.log(error);
+    //     errorDisplay.textContent = error.message;
+    // } else {
+    //     displayPet.
 
     // > Part B: display the pet info
 }
