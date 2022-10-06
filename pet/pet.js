@@ -1,6 +1,8 @@
 /* Imports */
 // this will check if we have a user and set signout link if it exists
 import '../auth/user.js';
+import { getPet } from '../fetch-utils.js';
+import { createComment } from '../fetch-utils.js';
 // > Part B: import pet fetch
 // > Part C: import create comment
 import { renderComment } from '../render-utils.js';
@@ -19,6 +21,25 @@ let pet = null;
 
 /* Events */
 window.addEventListener('load', async () => {
+    const searchParams = new URLSearchParams(location.search);
+    const id = searchParams.get('id');
+
+    if (!id) {
+        location.replace('/');
+        return;
+    }
+
+    const response = await getPet(id);
+    error = response.error;
+    pet = response.data;
+
+    if (error) {
+        location.replace('/');
+    } else {
+        displayPet();
+        displayComments();
+    }
+
     // > Part B:
     //   - get the id from the search params
     //   - if no id, redirect to list (home) page
@@ -31,6 +52,21 @@ window.addEventListener('load', async () => {
 
 addCommentForm.addEventListener('submit', async (e) => {
     e.preventDefault();
+    const formData = new FormData(addCommentForm);
+    const insertComment = {
+        text: formData.get('text'),
+        pet_id: pet.id,
+    };
+    const response = await createComment(insertComment);
+    error = response.error;
+    if (error) {
+        displayError();
+    } else {
+        const comment = response.data;
+        pet.comments.unshift(comment);
+        displayComments();
+        addCommentForm.reset();
+    }
 
     // > Part C:
     //    - create an comment insert object from formdata and the id of the pet
@@ -53,13 +89,18 @@ function displayError() {
 }
 
 function displayPet() {
-    // > Part B: display the pet info
+    petName.textContent = pet.name;
+    petBio.textContent = pet.bio;
+    petImage.src = pet.image_url;
 }
 
 function displayComments() {
     commentList.innerHTML = '';
 
     for (const comment of pet.comments) {
+        const commentEl = renderComment(comment);
+        commentList.append(commentEl);
         // > Part C: render the comments
     }
 }
+//asdasasdas//
